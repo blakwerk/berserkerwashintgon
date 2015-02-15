@@ -13,9 +13,16 @@ namespace SignalRChat.Controllers
             return View();
         }
 
+        public ActionResult Confessor()
+        {
+            ViewBag.Message = "Anonymously confess things to the internet.";
+
+            return View();
+        }
+
         public ActionResult Chat()
         {
-            ViewBag.Message = "";
+            ViewBag.Message = "Chat with anyone viewing berserkerwashington in real time.";
 
             return View();
         }

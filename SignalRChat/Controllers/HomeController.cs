@@ -22,21 +22,21 @@ namespace SignalRChat.Controllers
 
         public ActionResult Chat()
         {
-            ViewBag.Message = "Chat with anyone viewing berserkerwashington in real time.";
+            ViewBag.Message = "Chat, in real time, with anyone viewing berserkerwashington.com.";
 
             return View();
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "The description page for berserkerwashington.com...";
+            //ViewBag.Message = "The description page for berserkerwashington.com...";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Contact us...";
+            //ViewBag.Message = "Contact us...";
 
             return View();
         }

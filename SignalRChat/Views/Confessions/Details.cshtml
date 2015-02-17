@@ -1,0 +1,42 @@
+﻿@model SignalRChat.Models.Confession
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Confession</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TheConfession)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TheConfession)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Submitter)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Submitter)
+        </dd>
+
+        @*<dt>
+            @Html.DisplayNameFor(model => model.Rank)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rank)
+        </dd>*@
+
+    </dl>
+</div>
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
+    @Html.ActionLink("Back to List", "Index")
+</p>

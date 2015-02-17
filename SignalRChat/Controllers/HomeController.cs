@@ -17,6 +17,8 @@ namespace SignalRChat.Controllers
         {
             ViewBag.Message = "Anonymously confess things to the internet.";
 
+            // TODO - Fetch the last several confessions, and make sure they get returned with the view
+            
             return View();
         }
 

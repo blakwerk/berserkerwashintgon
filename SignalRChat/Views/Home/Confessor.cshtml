@@ -6,6 +6,7 @@
 <h2>confessr</h2>
 
 <div class="container">
+    <input type="text" name="FirstName" id="ishuman" />
     <input type="text" id="displayname" /> 
     <br/>
     <input type="text" id="message" autofocus="autofocus" />
@@ -26,13 +27,15 @@
     <script src="~/signalr/hubs"></script>
 
     <!--Reference scripts for saving/writing cookies-->
-    <script src="~/Scripts/Cookies.js"></script>
+    <script src="~/Scripts/cookies.js"></script>
 
     <!--SignalR script to update the chat page and send messages.-->
     <script>
+        // honeypot bots, but hide the field from people
+        $('#ishuman').css('display', 'none');
 
         function randomUserNumber() {
-            return Math.floor((Math.random() * 100000) + 1);
+            return Math.floor((Math.random() * 1000000) + 1);
         }
 
         $(function () {
@@ -64,8 +67,10 @@
                 // Define what to do when we send a message: send the message
                 // write a cookie(possibly) and clear the text box
                 function SendMessage() {
-                    // Call the Send method on the hub.
-                    confession.server.send($('#displayname').val(), $('#message').val());
+                    // Call the Send method on the hub (first verify that this isn't a bot).
+                    if ($('#ishuman').val() == '') {
+                        confession.server.send($('#displayname').val(), $('#message').val());
+                    }
                     // If the 'remember' box is checked, save a cookie
                     if($('#rememberme').is(':checked')){
                         createCookie('displayname', $('#displayname').val(), 365);
@@ -97,4 +102,5 @@
             return encodedValue;
         }
     </script>
+
 }

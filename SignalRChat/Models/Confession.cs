@@ -29,5 +29,7 @@ namespace SignalRChat.Models
     public class CommentDbContext : DbContext
     {
         public DbSet<Comment> Comments { get; set; }
+
+        public System.Data.Entity.DbSet<SignalRChat.Models.Confession> Confessions { get; set; }
     }
 }

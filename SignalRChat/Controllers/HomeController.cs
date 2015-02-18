@@ -1,25 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Net;
+
 using System.Web.Mvc;
+using SignalRChat.QueryEngine;
+
 
 namespace SignalRChat.Controllers
 {
     public class HomeController : Controller
     {
+
+
         public ActionResult Index()
         {
             return View();
         }
 
+        // This is unused now.
         public ActionResult Confessor()
         {
-            ViewBag.Message = "Anonymously confess things to the internet.";
+            var q = new Queryer();
+            var confessions = q.LastXConfessions(10).Result;
 
-            // TODO - Fetch the last several confessions, and make sure they get returned with the view
-            
-            return View();
+            return View(confessions);
         }
 
         public ActionResult Chat()

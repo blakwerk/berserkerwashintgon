@@ -78,6 +78,10 @@
     <Reference Include="Microsoft.Spatial">
       <HintPath>..\packages\Microsoft.Spatial.6.9.0\lib\portable-net40+sl5+wp8+win8+wpa\Microsoft.Spatial.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
@@ -166,11 +170,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -186,6 +185,7 @@
     <Compile Include="Hubs\ConfessionHub.cs" />
     <Compile Include="Models\Confession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryEngine\Queryer.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -242,6 +242,9 @@
     <Content Include="Views\Comments\Details.cshtml" />
     <Content Include="Views\Comments\Edit.cshtml" />
     <Content Include="Views\Comments\Index.cshtml" />
+    <Content Include="Views\Confessions\All.cshtml" />
+    <Content Include="Views\Confessions\DevDelete.cshtml" />
+    <Content Include="Views\Confessions\TopRated.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

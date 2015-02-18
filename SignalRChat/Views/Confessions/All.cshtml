@@ -1,0 +1,21 @@
+﻿@model IEnumerable<SignalRChat.Models.Confession>
+
+@{
+    ViewBag.Title = "All";
+}
+
+<h2>All Confessions</h2>
+
+<div class="container">
+    <ul id="discussion">
+        @foreach (var item in Model)
+        {
+            <li class="confession">
+                <strong class="confessionBolding">
+                    @Html.DisplayFor(modelItem => item.Submitter)
+                </strong>:
+                @Html.DisplayFor(modelItem => item.TheConfession)
+            </li>
+        }
+    </ul>
+</div>

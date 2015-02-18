@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SignalRChat.Models;
+using SignalRChat.QueryEngine;
 
 namespace SignalRChat.Controllers
 {
@@ -18,7 +19,12 @@ namespace SignalRChat.Controllers
         // GET: Confessions
         public async Task<ActionResult> Index()
         {
-            return View(await db.Confessions.ToListAsync());
+            //return View(await db.Confessions.ToListAsync());
+
+            var q = new Queryer();
+            var confessions = await q.LastXConfessions(10);
+
+            return View(confessions);
         }
 
         // GET: Confessions/Details/5
@@ -36,11 +42,17 @@ namespace SignalRChat.Controllers
             return View(confession);
         }
 
-        // Figure this out if we want to use OData...
-        //private async Task<IEnumerable<Confession>> Details(ODataQueryOptions<Confession> queryOptions)
-        //{
-        //    var t = new ODataValidationSettings() { };
-        //}
+        public async Task<ActionResult> All()
+        {
+            var q = new Queryer();
+            var confessions = await q.GetAllConfessions();
+            return View(confessions);
+        }
+
+        public async Task<ActionResult> TopRated()
+        {
+            return View();
+        }
 
         #region Create Actions
 
@@ -117,9 +129,14 @@ namespace SignalRChat.Controllers
             return View(confession);
         }
 
-#endregion
+        #endregion
 
         #region Delete actions
+
+        public async Task<ActionResult> DevDelete()
+        {
+            return View(await db.Confessions.ToListAsync());
+        }
 
         // GET: Confessions/Delete/5
         public async Task<ActionResult> Delete(int? id)
@@ -149,7 +166,7 @@ namespace SignalRChat.Controllers
             {
                 return HttpNotFound();
             }
-            return View(confession);
+            return RedirectToAction("DevDelete");
         }
 
         // POST: Confessions/Delete/5
@@ -170,10 +187,12 @@ namespace SignalRChat.Controllers
             Confession confession = await db.Confessions.FindAsync(id);
             db.Confessions.Remove(confession);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("DevDelete");
         }
 
         #endregion
+
+        #region Dispose method
 
         protected override void Dispose(bool disposing)
         {
@@ -183,5 +202,7 @@ namespace SignalRChat.Controllers
             }
             base.Dispose(disposing);
         }
+
+        #endregion
     }
 }

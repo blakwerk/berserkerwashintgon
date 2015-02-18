@@ -32,7 +32,8 @@ namespace SignalRChat.Hubs
             }
             catch (Exception e)
             {
-                Clients.All.addNewMessageToPage("System", string.Format("The following message \"{0}: {1}\" encountered an error while saving...", name, message));
+                Clients.All.addNewMessageToPage("System", string.Format(
+                    "The message \"{0}: {1}\" encountered an error while saving...\n{2}", name, message, e.Message));
             }
         }
 

@@ -1,9 +1,10 @@
-﻿
+﻿@model IEnumerable<SignalRChat.Models.Confession>
+
 @{
     ViewBag.Title = "confessr";
 }
 
-<h2>confessr</h2>
+<h2>confessional</h2>
 
 <div class="container">
     <input type="text" name="FirstName" id="ishuman" />
@@ -16,7 +17,16 @@
         Remember me: &nbsp;
         <input type="checkbox" id="rememberme" checked="checked" />
     </div>
-    <ul id="discussion"></ul>
+    <ul id="discussion">
+        @foreach(var item in Model)
+        {
+            <li class="confession">
+                <strong class="confessionBolding">
+                @Html.DisplayFor(modelItem => item.Submitter)</strong>: 
+                @Html.DisplayFor(modelItem => item.TheConfession)
+            </li>
+        }
+    </ul>
 </div>
 @section scripts {
     <!--Script references. -->
@@ -44,7 +54,7 @@
             // Create a function that the hub can call back to display messages.
             confession.client.addNewMessageToPage = function (name, message) {
                 // Add the message to the page.
-                $('#discussion').prepend('<li><strong>' + htmlEncode(name)
+                $('#discussion').prepend('<li class="confession"><strong class="confessionBolding">' + htmlEncode(name)
                     + '</strong>: ' + htmlEncode(message) + '</li>');
             };
 

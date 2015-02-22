@@ -10,14 +10,14 @@ using SignalRChat.Models;
 
 namespace SignalRChat.Controllers
 {
-    public class CommentsController : Controller
+    public class HashTagsController : Controller
     {
-        private CommentDbContext db = new CommentDbContext();
+        private HashTagDbContext db = new HashTagDbContext();
 
         // GET: Comments
         public ActionResult Index()
         {
-            return View(db.Comments.ToList());
+            return View(db.HashTags.ToList());
         }
 
         // GET: Comments/Details/5
@@ -27,12 +27,12 @@ namespace SignalRChat.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comment comment = db.Comments.Find(id);
-            if (comment == null)
+            var hashTags = db.HashTags.Find(id);
+            if (hashTags == null)
             {
                 return HttpNotFound();
             }
-            return View(comment);
+            return View(hashTags);
         }
 
         // GET: Comments/Create
@@ -46,16 +46,16 @@ namespace SignalRChat.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,TheComment,Submitter,Rank,ConfessionId")] Comment comment)
+        public ActionResult Create([Bind(Include = "Id,TheComment,Submitter,Rank,ConfessionId")] HashTag hTag)
         {
             if (ModelState.IsValid)
             {
-                db.Comments.Add(comment);
+                db.HashTags.Add(hTag);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(comment);
+            return View(hTag);
         }
 
         // GET: Comments/Edit/5
@@ -65,7 +65,7 @@ namespace SignalRChat.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comment comment = db.Comments.Find(id);
+            HashTag comment = db.HashTags.Find(id);
             if (comment == null)
             {
                 return HttpNotFound();
@@ -78,15 +78,15 @@ namespace SignalRChat.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,TheComment,Submitter,Rank,ConfessionId")] Comment comment)
+        public ActionResult Edit([Bind(Include = "Id,TheComment,Submitter,Rank,ConfessionId")] HashTag hTag)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(comment).State = EntityState.Modified;
+                db.Entry(hTag).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(comment);
+            return View(hTag);
         }
 
         // GET: Comments/Delete/5
@@ -96,7 +96,7 @@ namespace SignalRChat.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comment comment = db.Comments.Find(id);
+            HashTag comment = db.HashTags.Find(id);
             if (comment == null)
             {
                 return HttpNotFound();
@@ -109,8 +109,8 @@ namespace SignalRChat.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Comment comment = db.Comments.Find(id);
-            db.Comments.Remove(comment);
+            HashTag comment = db.HashTags.Find(id);
+            db.HashTags.Remove(comment);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

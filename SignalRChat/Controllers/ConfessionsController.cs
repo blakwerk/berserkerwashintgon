@@ -9,12 +9,18 @@ using System.Web;
 using System.Web.Mvc;
 using SignalRChat.Models;
 using SignalRChat.QueryEngine;
+using SignalRChat.Utils;
 
 namespace SignalRChat.Controllers
 {
     public class ConfessionsController : Controller
     {
-        private ConfessionDbContext db = new ConfessionDbContext();
+        private ConfessrDbContext db;
+
+        public ConfessionsController()
+        {
+            db = new ConfessrDbContext((new GenerateConnectionProperties()).connectionString);
+        }
 
         // GET: Confessions
         public async Task<ActionResult> Index(int? id)
@@ -76,7 +82,8 @@ namespace SignalRChat.Controllers
             try
             {
                 confession.Rank = 0;
-                confession.Comments = null;
+                // parse the message for hashtags, find or create them, and add the relationships as necessary
+                //confession.HashTags = null;
 
                 if (ModelState.IsValid)
                 {

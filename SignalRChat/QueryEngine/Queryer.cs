@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using SignalRChat.Utils;
 
 namespace SignalRChat.QueryEngine
 {
@@ -15,19 +16,20 @@ namespace SignalRChat.QueryEngine
     public class Queryer
     {
 
-        private WebClient _client = new WebClient()
-        {
-            BaseAddress = ("http://www.berserkerwashington.com")
-        };
-
-        private Uri _commentsOData;
+        //private string uri;
+        private WebClient _client;
+        private Uri _hashTagsOData;
         private Uri _confessionsOData;
 
         public Queryer()
         {
+             _client = new WebClient()
+             {
+                 BaseAddress = ((new GenerateConnectionProperties()).uri)
+             };
+
             _client.Headers.Add(HttpRequestHeader.Accept, "application/json");
-            _confessionsOData = new Uri("http://berserkerwashington.com/odata/ConfessionsOData?");
-            //_confessionsOData = new Uri("/odata/ConfessionsOData?");
+            _confessionsOData = new Uri((new GenerateConnectionProperties()).uri + "odata/ConfessionsOData?");
         }
 
         public async Task<IEnumerable<Confession>> FirstXConfessions(int x)
@@ -81,8 +83,8 @@ namespace SignalRChat.QueryEngine
                     new Confession
                     {
                         Submitter = "SYSTEM",
-                        TheConfession = "An error occurred.  If this persists, please contact the administrator. <br/>" +
-                                        ex.HResult + "<br/>" + ex.Message
+                        TheConfession = "An error occurred.  If this persists, please contact the administrator. \n" +
+                                        ex.HResult + "\n" + ex.Message
                     }
                 };
             }

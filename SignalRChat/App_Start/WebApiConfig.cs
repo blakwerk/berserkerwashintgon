@@ -27,7 +27,7 @@ namespace SignalRChat
 
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<Confession>("ConfessionsOData");
-            builder.EntitySet<Comment>("Comments");
+            builder.EntitySet<HashTag>("HashTags");
             config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
         }
     }

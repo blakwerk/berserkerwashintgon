@@ -12,6 +12,7 @@ using System.Web.Http.ModelBinding;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Routing;
 using SignalRChat.Models;
+using SignalRChat.Utils;
 
 namespace SignalRChat.Controllers
 {
@@ -30,7 +31,13 @@ namespace SignalRChat.Controllers
     */
     public class ConfessionsODataController : ODataController
     {
-        private CommentDbContext db = new CommentDbContext();
+        private ConfessrDbContext db;
+
+        public ConfessionsODataController()
+        {
+            // this generates the appropriate connection string based on debug vs release
+            db = new ConfessrDbContext((new GenerateConnectionProperties()).connectionString);
+        }
 
         // GET: odata/ConfessionsOData
         [EnableQuery]
@@ -153,11 +160,11 @@ namespace SignalRChat.Controllers
         //}
         #endregion
 
-        // GET: odata/ConfessionsOData(5)/Comments
+        // GET: odata/ConfessionsOData(5)/HashTags
         [EnableQuery]
-        public IEnumerable<Comment> GetComments([FromODataUri] int key)
+        public IEnumerable<HashTag> GetHashTags([FromODataUri] int key)
         {
-            return db.Confessions.Where(m => m.Id == key).SelectMany(m => m.Comments).ToList();
+            return db.Confessions.Where(m => m.Id == key).SelectMany(m => m.HashTags).ToList();
         }
 
         protected override void Dispose(bool disposing)

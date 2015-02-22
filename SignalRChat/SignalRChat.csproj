@@ -174,7 +174,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\CommentsController.cs" />
+    <Compile Include="Controllers\HashTagsController.cs" />
     <Compile Include="Controllers\ConfessionsController.cs" />
     <Compile Include="Controllers\ConfessionsODataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -184,11 +184,19 @@
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Hubs\ConfessionHub.cs" />
     <Compile Include="Models\Confession.cs" />
+    <Compile Include="Models\ConfessrDbContext.cs" />
+    <Compile Include="Models\HashTag.cs" />
+    <Compile Include="Models\Old\Confession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryEngine\Queryer.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utils\GenerateConnectionProperties.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\confessr.mdf" />
+    <Content Include="App_Data\confessr_log.ldf">
+      <DependentUpon>confessr.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -198,10 +206,15 @@
     <Content Include="Images\allUrBase.png" />
     <Content Include="Images\emptyStar16px.png" />
     <Content Include="Images\filledStar16px.png" />
+    <Content Include="Images\forward18.png" />
     <Content Include="Images\link.png" />
+    <Content Include="Images\more6.png" />
+    <Content Include="Images\share21.png" />
+    <Content Include="Images\speechbubble23.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\GoDaddy Publish.pubxml" />
+    <None Include="Properties\PublishProfiles\GoDaddy Publish2 %28Debug%29.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\confessr_utils.js" />
     <Content Include="Scripts\cookies.js" />
@@ -251,9 +264,7 @@
     <Content Include="Views\Confessions\DevDelete.cshtml" />
     <Content Include="Views\Confessions\TopRated.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

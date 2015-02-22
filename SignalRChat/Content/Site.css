@@ -22,3 +22,30 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/* Set the style for the individual confession footers */
+
+li.media {
+    margin-bottom: 25px;
+}
+
+.confessionFooter {
+        border-bottom: 2px double rgba(45,45,45,0.07);
+        height: 30px;
+}
+
+.confessionFooterSpacer{
+    width: 65%;
+    float: left;
+    height: 20px;
+}
+
+.confessionRank {
+    float: left;
+    width: 10%;
+}
+
+.confessionLink {
+    float: left;
+    width: 10%;
+}

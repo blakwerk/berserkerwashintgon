@@ -9,34 +9,49 @@
 <div>
     <h4>Confession</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TheConfession)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TheConfession)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Submitter)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Submitter)
-        </dd>
-
+    <ul id="discussion" class="discussion media media-list">
         @*<dt>
-            @Html.DisplayNameFor(model => model.Rank)
-        </dt>
+                @Html.DisplayNameFor(model => model.TheConfession)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Rank)
-        </dd>*@
+            <dd>
+                @Html.DisplayFor(model => model.TheConfession)
+            </dd>
 
-    </dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.Submitter)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Submitter)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Rank)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Rank)
+            </dd>*@
+
+        <li class="media">
+            <div class="confession original-confession actionable-confession media-body">
+                <h4 class="media-heading confessionHeader"> @Html.DisplayFor(modelItem => Model.Submitter) </h4>
+                <div class="entities-media-container media-container confession">
+                    @Html.DisplayFor(modelItem => Model.TheConfession)
+                </div>
+                <div class="media-footer confessionFooter confessionLinks">
+                    <div class="confessionFooterSpacer"></div>
+                    <div class="confessionRank">
+                        <img id="img_@Html.DisplayFor(modelItem => Model.Id)" class="confessionRankPic" src="~/Images/emptyStar16px.png" /> @Html.DisplayFor(modelItem => Model.Rank)
+                    </div>
+                    <div class="confessionLink"><a href="/Confessions/Details/@Html.DisplayFor(modelItem => Model.Id)"><img src="~/Images/link.png" alt="Copy link to clipboard..." /></a></div>
+                </div>
+            </div>
+        </li>
+    </ul>
 </div>
 <p>
     @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary" })
 </p>

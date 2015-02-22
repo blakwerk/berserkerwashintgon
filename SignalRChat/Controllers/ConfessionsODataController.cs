@@ -34,9 +34,9 @@ namespace SignalRChat.Controllers
 
         // GET: odata/ConfessionsOData
         [EnableQuery]
-        public IQueryable<Confession> GetConfessionsOData()
+        public IEnumerable<Confession> GetConfessionsOData()
         {
-            return db.Confessions;
+            return db.Confessions.ToList();
         }
 
         // GET: odata/ConfessionsOData(5)
@@ -155,9 +155,9 @@ namespace SignalRChat.Controllers
 
         // GET: odata/ConfessionsOData(5)/Comments
         [EnableQuery]
-        public IQueryable<Comment> GetComments([FromODataUri] int key)
+        public IEnumerable<Comment> GetComments([FromODataUri] int key)
         {
-            return db.Confessions.Where(m => m.Id == key).SelectMany(m => m.Comments);
+            return db.Confessions.Where(m => m.Id == key).SelectMany(m => m.Comments).ToList();
         }
 
         protected override void Dispose(bool disposing)

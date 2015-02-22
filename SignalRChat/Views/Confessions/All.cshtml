@@ -10,12 +10,31 @@
     <ul id="discussion">
         @foreach (var item in Model)
         {
-            <li class="confession">
+            @*<li class="confession">
                 <strong class="confessionBolding">
                     @Html.DisplayFor(modelItem => item.Submitter)
                 </strong>:
                 @Html.DisplayFor(modelItem => item.TheConfession)
-            </li>
-        }
+            </li>*@
+
+            @*@foreach (var item in Model)
+            {*@
+                <li class="media">
+                    <div class="confession original-confession actionable-confession media-body">
+                        <h4 class="media-heading confessionHeader"> @Html.DisplayFor(modelItem => item.Submitter) </h4>
+                        <div class="entities-media-container media-container confession">
+                            @Html.DisplayFor(modelItem => item.TheConfession)
+                        </div>
+                        <div class="media-footer confessionFooter confessionLinks">
+                            <div class="confessionFooterSpacer"></div>
+                            <div class="confessionRank">
+                                <img id="img_@Html.DisplayFor(modelItem => item.Id)" class="confessionRankPic" src="~/Images/emptyStar16px.png" alt="Rate" /> @Html.DisplayFor(modelItem => item.Rank)
+                            </div>
+                            <div class="confessionLink"><a href="/Confessions/Details/@Html.DisplayFor(modelItem => item.Id)"><img src="~/Images/link.png" alt="Share" /></a></div>
+                        </div>
+                    </div>
+                </li>
+            @*}*@
+}
     </ul>
 </div>

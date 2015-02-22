@@ -17,14 +17,18 @@ namespace SignalRChat.Controllers
         private ConfessionDbContext db = new ConfessionDbContext();
 
         // GET: Confessions
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int? id)
         {
-            //return View(await db.Confessions.ToListAsync());
+            int x = 5;
+            if (id == null)
+            {
+                id = 0;
+            }
 
             var q = new Queryer();
-            var confessions = await q.LastXConfessions(10);
-
-            return View(confessions);
+            var confessions = await q.NextXConfessions(x, (int)id);
+            var confessionsKvp = new KeyValuePair<int, IEnumerable<Confession>>((int)id+x, confessions); 
+            return View(confessionsKvp);
         }
 
         // GET: Confessions/Details/5
@@ -67,12 +71,22 @@ namespace SignalRChat.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,TheConfession,Submitter,Rank")] Confession confession)
+        public async Task<ActionResult> Create([Bind(Include = "TheConfession,Submitter")] Confession confession)
         {
-            if (ModelState.IsValid)
+            try
             {
-                await InnerCreate(confession);
-                
+                confession.Rank = 0;
+                confession.Comments = null;
+
+                if (ModelState.IsValid)
+                {
+                    await InnerCreate(confession);
+                }
+            }
+            catch (DataException dex )
+            {
+                //Log the error (uncomment dex variable name and add a line here to write a log.
+                ModelState.AddModelError("", new DataException("Unable to save changes.  Try again, and if the problem persists, please contact us.", dex));
             }
 
             return Redirect("Index");
@@ -182,6 +196,9 @@ namespace SignalRChat.Controllers
             //return RedirectToAction("Index");
         }
 
+
+        // To delete data, make this method public and then browse to ../Confessions/DevDelete
+        //  then make the method private again so this cannot be done on the live site.
         private async Task<ActionResult> InnerDeleteConfirmed(int id)
         {
             Confession confession = await db.Confessions.FindAsync(id);

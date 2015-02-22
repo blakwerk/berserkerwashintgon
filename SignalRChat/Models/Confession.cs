@@ -9,11 +9,17 @@ namespace SignalRChat.Models
         public string TheConfession { get; set; }
         public string Submitter { get; set; }
         public int Rank { get; set; }
-        public List<Comment> Comments { get; set; }
+
+        // Chanted/Added after initial creation
+        //public List<Comment> Comments { get; set; }
+
+        public virtual ICollection<HashTag> HashTags { get; set; }
     }
 
-    public class Comment
+    public class HashTag
     {
+        // This whole class has changed.
+
         public int Id { get; set; }
         public string TheComment { get; set; }
         public string Submitter { get; set; }
@@ -24,11 +30,12 @@ namespace SignalRChat.Models
     public class ConfessionDbContext : DbContext
     {
         public DbSet<Confession> Confessions { get; set; }
+
     }
 
-    public class CommentDbContext : DbContext
+    public class HashTagDbContext : DbContext
     {
-        public DbSet<Comment> Comments { get; set; }
+        public DbSet<HashTag> HashTags { get; set; }
 
         public System.Data.Entity.DbSet<SignalRChat.Models.Confession> Confessions { get; set; }
     }

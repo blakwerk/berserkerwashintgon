@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SignalRChat.Models.Confession>
+﻿@model KeyValuePair<int, IEnumerable<SignalRChat.Models.Confession>>
 
 @{
     ViewBag.Title = "confessr";
@@ -8,26 +8,47 @@
 
 <div class="container">
     <input type="text" name="FirstName" id="ishuman" />
-    <input type="text" id="displayname" />
+    <input type="text" id="displayname" rquired />
     <br />
-    <input type="text" id="message" autofocus="autofocus" />
+    <input type="text" id="message" autofocus="autofocus" required />
     <input type="button" id="sendmessage" value="Send" />
     <br />
     <div class="alert-info">
         Remember me: &nbsp;
         <input type="checkbox" id="rememberme" checked="checked" />
     </div>
-    <ul id="discussion">
-        @foreach (var item in Model)
+    <ul id="discussion" class="discussion media media-list">
+        @foreach (var item in Model.Value)
         {
-            <li class="confession">
-                <strong class="confessionBolding">
-                    @Html.DisplayFor(modelItem => item.Submitter)
-                </strong>:
-                @Html.DisplayFor(modelItem => item.TheConfession)
+            <li class="media">
+                <div class="confession original-confession actionable-confession media-body">
+                    <h4 class="media-heading confessionHeader"> @Html.DisplayFor(modelItem => item.Submitter) </h4>
+                    <div class="entities-media-container media-container confession">
+                        @Html.DisplayFor(modelItem => item.TheConfession)
+                    </div>
+                    <div class="media-footer confessionFooter confessionLinks">
+                        <div class="confessionFooterSpacer"></div>
+                        <div class="confessionRank" >
+                            <img id="img_@Html.DisplayFor(modelItem => item.Id)" class="confessionRankPic" src="~/Images/emptyStar16px.png" alt="Rate"/> @Html.DisplayFor(modelItem => item.Rank)
+                        </div>
+                        <div class="confessionLink"><a href="/Confessions/Details/@Html.DisplayFor(modelItem => item.Id)"><img src="~/Images/link.png" alt="Share" /></a></div>
+                    </div>
+                </div>
             </li>
         }
     </ul>
+    <script>
+        // Inline js to write the back button
+        (function () {
+            var index = @Html.DisplayFor(modelItem => Model.Key);
+            if ((index - 10) >= 0){
+                document.write('<a class="btn btn-primary" href="/Confessions/Index/' + (@Html.DisplayFor(modelItem => Model.Key)-10) + '"><< Back</a>');
+            }
+        })();
+    </script>
+    
+    <a class="btn btn-primary" href="/Confessions/Index/@Html.DisplayFor(modelItem => Model.Key)/">Next >></a>
+    @*@Html.ActionLink("confessional", "Index", "Confessions")*@
 </div>
 @section scripts {
     <!--Script references. -->
@@ -39,10 +60,11 @@
 
     <!--Reference scripts for saving/writing cookies-->
     <script src="~/Scripts/cookies.js"></script>
+    <script src="~/Scripts/confessr_utils.js"></script>
 
     <!--SignalR script to update the chat page and send messages.-->
     <script>
-        // honeypot bots, but hide the field from people
+        // honeypot all the bots!
         $('#ishuman').css('display', 'none');
 
         function randomUserNumber() {
@@ -59,13 +81,12 @@
                     + '</strong>: ' + htmlEncode(message) + '</li>');
             };
 
-
             // Try to get the user name from a cookie and store it to prepend to messages.
             // If no cookie found, generate an anonymous user name
             var cook = readCookie("displayname");
             if (cook != null) {
                 document.getElementById('displayname').defaultValue = cook;
-             }
+            }
             else {
                 document.getElementById('displayname').defaultValue = "Anonymous user " + randomUserNumber();
             }
@@ -79,7 +100,9 @@
                 // write a cookie(possibly) and clear the text box
                 function SendMessage() {
                     // Call the Send method on the hub (first verify that this isn't a bot).
-                    if ($('#ishuman').val() == '') {
+                    var submitName = $('#displayname').val();
+                    var submitText = $('#message').val();
+                    if ($('#ishuman').val() == '' && submitText != '' && submitName != '') {
                         confession.server.send($('#displayname').val(), $('#message').val());
                     }
                     // If the 'remember' box is checked, save a cookie
@@ -111,6 +134,15 @@
         function htmlEncode(value) {
             var encodedValue = $('<div />').text(value).html();
             return encodedValue;
+        }
+
+        function imgLoadReroute(imgId) {
+            alert(imgId);
+            //var imgId = $('img').attr('id');
+            if(didRateConfession(imgId)){
+                alert("rated");
+                $('#'+imgId).attr('src', '~/Images/filledStar16px.png');
+            }
         }
     </script>
 

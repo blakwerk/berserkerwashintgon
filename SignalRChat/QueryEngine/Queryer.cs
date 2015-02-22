@@ -27,6 +27,7 @@ namespace SignalRChat.QueryEngine
         {
             _client.Headers.Add(HttpRequestHeader.Accept, "application/json");
             _confessionsOData = new Uri("http://berserkerwashington.com/odata/ConfessionsOData?");
+            //_confessionsOData = new Uri("/odata/ConfessionsOData?");
         }
 
         public async Task<IEnumerable<Confession>> FirstXConfessions(int x)
@@ -40,6 +41,13 @@ namespace SignalRChat.QueryEngine
             // Take the top X from the descending order of Id (so Ids going highest to lowest)
             var queryStr = "$orderby=Id%20desc&$top=";
             return await PerformConfessionsODataQuery(_confessionsOData + queryStr + x);
+        }
+
+        public async Task<IEnumerable<Confession>> NextXConfessions(int top, int skip)
+        {
+            // Take the top X from the descending order of Id (so Ids going highest to lowest)
+            var queryStr = "$orderby=Id%20desc&$top="+top+"&$skip="+skip;
+            return await PerformConfessionsODataQuery(_confessionsOData + queryStr);
         }
 
         public async Task<IEnumerable<Confession>> GetAllConfessions()
